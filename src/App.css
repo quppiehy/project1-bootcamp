@@ -1,19 +1,328 @@
-.App {
+.place_center {
+  justify-content: center;
+}
+
+/* background */
+.gradient {
+  background-color: #004d78;
+  background-image: linear-gradient(
+    108.71deg,
+    #00c4cc 1.05%,
+    rgba(0, 196, 204, 0) 100%
+  );
+  mix-blend-mode: normal;
+  min-height: 100vh;
+  min-width: 100vh;
+}
+
+/* header */
+.logo_padding {
+  padding: 20px;
+}
+
+.logo_size {
+  height: 120px;
+}
+
+/* maintext align left */
+.text_left {
+  text-align: left;
+}
+
+/* main Login Pg Buttons */
+.main_button {
+  background: #084163;
+  box-shadow: 0px 4px 4px rgba(198, 198, 198, 0.25);
+  border-radius: 20px;
+  stroke: none;
+  width: 164px;
+  height: 48px;
+  border-width: 0px !important;
+  margin-left: 0px;
+  color: #ffffff;
+}
+
+.signup_button {
+  background: #084163;
+  box-shadow: 0px 4px 4px rgba(198, 198, 198, 0.25);
+  border-radius: 20px;
+  stroke: none;
+  width: 164px;
+  height: 48px;
+  border-width: 0px !important;
+  margin-left: 0px;
+}
+
+.main_button:hover {
+  background-color: #c6fdff;
+  color: #000000;
+}
+
+.signup_button:hover {
+  background-color: #c6fdff;
+  color: #000000;
+}
+
+._button:hover {
+  background-color: #c6fdff;
+  color: #000000;
+}
+
+.site_title {
+  margin-left: 200px;
+  justify-self: center;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 85px;
+  line-height: 90px;
+  letter-spacing: 0.02em;
+  text-align: left;
+  color: #ffffff;
+}
+
+.site_text {
+  margin-left: 220px;
+  margin-top: -30px;
+  color: #ffffff;
+}
+
+.login_rectangle_login {
+  width: 350px;
+  height: 350px;
+  background: rgba(255, 255, 255, 0.67);
+  border-radius: 50px;
+  padding-top: 50px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.login_rectangle_signup {
+  width: 350px;
+  height: 380px;
+  background: rgba(255, 255, 255, 0.67);
+  border-radius: 50px;
+  padding-top: 50px;
+  text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.align_left {
+  color: #000000;
+  text-decoration: none;
+}
+
+.align_right {
+  color: #000000;
+  text-decoration: none;
+}
+/* to make text act as button but looks like text */
+.button_astext {
+  box-shadow: inset 0 0 0 0 #54b3d6;
+  color: #000000;
+  transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  margin-left: -12px !important;
+}
+
+.button_astext_right {
+  box-shadow: inset 0 0 0 0 #54b3d6;
+  color: #000000;
+  transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  margin-left: -42px !important;
+  padding-right: 5px !important;
+}
+
+.button_astext_signupLogin {
+  box-shadow: inset 0 0 0 0 #54b3d6;
+  color: #000000;
+  transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  margin-left: -52px !important;
+  padding-right: 5px !important;
+}
+
+.button_astext:hover {
+  box-shadow: inset 120px 0 0 0 #c6fdff;
+}
+
+.button_astext_right:hover {
+  box-shadow: inset 120px 0 0 0 #c6fdff;
+}
+
+.login_box_row {
+  padding: 5px !important;
+}
+
+.login_box_row2 {
+  padding: 5px !important;
+}
+
+.login_box_row3 {
+  padding: 5px !important;
+}
+
+@media screen and (min-width: 20em) and (max-width: 30.99em) {
+  .site_title {
+    margin-left: 15px;
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 54px;
+    line-height: 65px;
+    letter-spacing: 0.02em;
+    text-align: left;
+  }
+
+  .site_text {
+    margin-left: 38px;
+    margin-top: -30px;
+    color: #ffffff;
+  }
+
+  .main_button {
+    width: 120px;
+    height: 32px;
+    border-width: 0px !important;
+    margin-left: 50px;
+    margin-top: -40px;
+  }
+
+  .signup_button {
+    width: 120px;
+    height: 32px;
+    border-width: 0px !important;
+    margin-left: 20px;
+    margin-top: -40px;
+  }
+
+  .login_rectangle {
+    width: 280px;
+    height: 300px;
+    margin-left: 18px;
+  }
+}
+
+@media screen and (min-width: 31em) and (max-width: 48.99em) {
+  .site_title {
+    margin-left: 20px;
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 70px;
+    line-height: 65px;
+    letter-spacing: 0.02em;
+    text-align: left;
+  }
+
+  .site_text {
+    margin-left: 45px;
+    margin-top: -30px;
+    color: #ffffff;
+  }
+
+  .main_button {
+    width: 120px;
+    height: 32px;
+    border-width: 0px !important;
+    margin-left: 70px;
+    margin-top: -40px;
+  }
+
+  .signup_button {
+    width: 120px;
+    height: 32px;
+    border-width: 0px !important;
+    margin-left: 20px;
+    margin-top: -20px;
+  }
+
+  .login_rectangle {
+    width: 350px;
+    height: 300px;
+    margin-left: 30px;
+  }
+}
+
+@media screen and (min-width: 49em) and (max-width: 62em) {
+  .site_title {
+    margin-left: 45px;
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 75px;
+    line-height: 65px;
+    letter-spacing: 0.02em;
+    text-align: left;
+  }
+
+  .site_text {
+    margin-left: 70px;
+    margin-top: -30px;
+    color: #ffffff;
+  }
+
+  .main_button {
+    width: 120px;
+    height: 32px;
+    border-width: 0px !important;
+    margin-left: 70px;
+    margin-top: -40px;
+  }
+
+  .signup_button {
+    width: 120px;
+    height: 32px;
+    border-width: 0px !important;
+    margin-left: 20px;
+    margin-top: -20px;
+  }
+
+  .login_rectangle {
+    width: 350px;
+    height: 300px;
+    margin-left: 60px;
+  }
+}
+
+@media screen and (min-width: 62.01em) {
+  .site_title {
+    margin-left: 45px;
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 84px;
+    line-height: 65px;
+    letter-spacing: 0.02em;
+    text-align: left;
+  }
+
+  .site_text {
+    margin-left: 70px;
+    margin-top: -30px;
+    color: #ffffff;
+  }
+
+  .main_button {
+    width: 120px;
+    height: 32px;
+    border-width: 0px !important;
+    margin-left: 70px;
+    margin-top: -40px;
+  }
+
+  .signup_button {
+    width: 120px;
+    height: 32px;
+    border-width: 0px !important;
+    margin-left: 20px;
+    margin-top: -20px;
+  }
+
+  .login_rectangle {
+    width: 350px;
+    height: 300px;
+    margin-left: 60px;
+  }
 }
