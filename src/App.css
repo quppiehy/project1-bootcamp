@@ -68,6 +68,7 @@
   color: #000000;
 }
 
+/* words style */
 .site_title {
   margin-left: 200px;
   justify-self: center;
@@ -81,12 +82,41 @@
   color: #ffffff;
 }
 
+.loginbox_title {
+  font-family: "Bungee";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 30px;
+}
+
+.page_title {
+  font-family: "Bungee";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 77px;
+  color: #ffffff;
+  text-align: center;
+}
+
 .site_text {
   margin-left: 220px;
   margin-top: -30px;
   color: #ffffff;
 }
 
+.align_left {
+  color: #000000;
+  text-decoration: none;
+}
+
+.align_right {
+  color: #000000;
+  text-decoration: none;
+}
+
+/* white box for login/signup/password */
 .login_rectangle_login {
   width: 350px;
   height: 350px;
@@ -105,15 +135,85 @@
   text-align: center;
 }
 
-.align_left {
-  color: #000000;
-  text-decoration: none;
+.login_box_row {
+  padding: 5px !important;
 }
 
-.align_right {
-  color: #000000;
-  text-decoration: none;
+.login_box_row2 {
+  padding: 5px !important;
 }
+
+.login_box_row3 {
+  padding: 5px !important;
+}
+
+/*dashboard buttons*/
+.dashboard_color1 {
+  background: #01b8c2;
+}
+
+.dashboard_color2 {
+  background: #04859a;
+}
+
+.dashboard_color3 {
+  background: #074a6a;
+}
+
+.dashboard_color4 {
+  background: #09284f;
+}
+
+.dashboard_background {
+  border: 1px solid #ffffff;
+  border-radius: 0px 50px;
+  width: 224px !important;
+  height: 288px;
+  cursor: pointer;
+}
+
+.dashboard_background:hover {
+  box-shadow: 8px 8px 10px 0px #fffaec;
+}
+
+.dashboard_panel1 {
+  padding-left: 45px;
+  padding-top: 30px;
+  justify-content: center;
+}
+
+.dashboard_panel2 {
+  padding-left: 60px;
+  padding-top: 30px;
+  justify-content: center;
+}
+
+.dashboard_panel3n4 {
+  padding-left: 40px;
+  padding-top: 30px;
+  justify-content: center;
+}
+
+/* dashboard text */
+.brand_names {
+  padding-top: 20px;
+  text-align: center;
+  color: #ffffff;
+  font-family: "Bungee";
+}
+.brand_names3 {
+  padding-top: 24px;
+  text-align: center;
+  color: #ffffff;
+  font-family: "Bungee";
+}
+.brand_names4 {
+  padding-top: 30px;
+  text-align: center;
+  color: #ffffff;
+  font-family: "Bungee";
+}
+
 /* to make text act as button but looks like text */
 .button_astext {
   box-shadow: inset 0 0 0 0 #54b3d6;
@@ -133,7 +233,7 @@
   border: none !important;
   cursor: pointer !important;
   margin-left: -42px !important;
-  padding-right: 5px !important;
+  padding-right: 15px !important;
 }
 
 .button_astext_signupLogin {
@@ -147,24 +247,21 @@
   padding-right: 5px !important;
 }
 
+.button_astext_signupLogin:hover {
+  box-shadow: inset 130px 0 0 0 #c6fdff;
+}
+
 .button_astext:hover {
   box-shadow: inset 120px 0 0 0 #c6fdff;
 }
 
 .button_astext_right:hover {
-  box-shadow: inset 120px 0 0 0 #c6fdff;
+  box-shadow: inset 130px 0 0 0 #c6fdff;
 }
 
-.login_box_row {
-  padding: 5px !important;
-}
-
-.login_box_row2 {
-  padding: 5px !important;
-}
-
-.login_box_row3 {
-  padding: 5px !important;
+/* dashboard images  */
+.dashboard_img {
+  padding-top: 20px !important;
 }
 
 @media screen and (min-width: 20em) and (max-width: 30.99em) {
@@ -326,3 +423,5 @@
     margin-left: 60px;
   }
 }
+
+@import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");

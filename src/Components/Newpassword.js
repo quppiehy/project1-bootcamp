@@ -5,78 +5,54 @@ import Col from "react-bootstrap/Col";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
 import Swal from "sweetalert2";
-// import Dashboard from "./Dashboard";
-// import Home from "./Home";
 
-class Login extends React.Component {
+export default class Newpassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: "home",
-      username: "",
+      currentPage: "newpassword",
+      username: this.props.username,
+      email: this.props.email,
       password: "",
-      email: "",
-      login: false,
-      user: "",
+      passwordconfirm: "",
     };
   }
 
-  handleLogin = (event) => {
+  //to change password
+  handleNewPassword = (event) => {
     event.preventDefault();
 
-    if (
-      this.state.username.trim() === "" ||
-      this.state.password.trim() === ""
-    ) {
-      Swal.fire({
-        title: "Error",
-        text: `Sorry, you have to fill up both fields.`,
-        icon: "error",
-        timer: 5000,
-        confirmButtonText: "OK",
-      }).then(function () {
-        // return to page
-        return;
-      });
-    }
-    const { username, password } = this.state;
-    const myUsername = JSON.parse(localStorage.getItem(username));
-    console.log(myUsername);
-    console.log(username, password);
-
-    console.log(myUsername.password);
-    if (myUsername === null) {
+    const { username, email, password, passwordconfirm } = this.state;
+    console.log(username);
+    if (password !== passwordconfirm) {
       Swal.fire({
         title: "error",
-        text: `Sorry! We do not have a user registered under ${this.state.username}. Please try again or Sign Up for an account.`,
+        text: `The passwords do not match. Please try again.`,
         icon: "error",
         timer: 5000,
         confirmButtonText: "OK",
       });
-    } else if (password === myUsername.password) {
-      console.log("running");
-      //store the reference to this
-      const self = this;
+    } else {
+      const myObject = { username, email, password };
+      localStorage.setItem(username, JSON.stringify(myObject));
+      localStorage.setItem(email, JSON.stringify(myObject));
       this.setState(
         {
-          user: username,
-          isLoggedIn: true,
-          username: this.state.username,
+          currentPage: "home",
           password: "",
-          currentPage: "dashboard",
+          passwordconfirm: "",
         },
         () => {
           Swal.fire({
-            title: "Success!",
-            text: "You have successfully logged in!",
+            title: "Success",
+            text: `Password has been updated for username ${username}. Please login with your new password.`,
             icon: "success",
             timer: 5000,
             confirmButtonText: "OK",
           }).then(function () {
-            // Redirect the user
-            console.log("Page function");
-            self.props.handleLogin(self.state.username);
-            self.props.page("dashboard");
+            const anchor = document.createElement("a");
+            anchor.href = "/";
+            anchor.click();
           });
         }
       );
@@ -85,7 +61,7 @@ class Login extends React.Component {
 
   handleChange = (events) => {
     let { name, value } = events.target;
-    console.log(name, value);
+
     this.setState({
       [name]: value,
     });
@@ -93,29 +69,9 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="login_rectangle_login">
-        <Row>
-          <Col>
-            <div className="loginbox_title">Login</div>
-          </Col>
-        </Row>
-        <Form onSubmit={this.handleLogin}>
+      <div>
+        <Form onSubmit={this.handleNewPassword}>
           <Row className="login_box_row">
-            <Col>
-              <Form.Group>
-                <Form.Control
-                  className="text_field w-75 mx-auto"
-                  name="username"
-                  type="text"
-                  placeholder="Username"
-                  value={this.state.username}
-                  onChange={(events) => this.handleChange(events)}
-                  required
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row className="login_box_row2">
             <Col>
               <Form.Group>
                 <Form.Control
@@ -130,21 +86,36 @@ class Login extends React.Component {
               </Form.Group>
             </Col>
           </Row>
+          <Row className="login_box_row2">
+            <Col>
+              <Form.Group>
+                <Form.Control
+                  className="text_field w-75 mx-auto"
+                  name="passwordconfirm"
+                  type="password"
+                  placeholder="Confirm Password"
+                  value={this.state.passwordconfirm}
+                  onChange={(events) => this.handleChange(events)}
+                  required
+                />
+              </Form.Group>
+            </Col>
+          </Row>
           <Row className="login_box_row3">
             <Col>
               <button
                 className="align_left button_astext"
-                onClick={() => this.props.page("signup")}
+                onClick={() => this.props.page("home")}
               >
-                Sign Up
+                Login
               </button>
             </Col>
             <Col>
               <button
                 className="=align_right button_astext_right"
-                onClick={() => this.props.page("forgetpassword")}
+                onClick={() => this.props.page("signup")}
               >
-                Forget Password
+                Signup
               </button>
             </Col>
           </Row>
@@ -153,10 +124,10 @@ class Login extends React.Component {
               <br />
               <button
                 className="main_button mx-auto"
-                value="submit"
                 type="submit"
+                value="submit"
               >
-                Login
+                Submit
               </button>
             </Col>
           </Row>
@@ -165,5 +136,3 @@ class Login extends React.Component {
     );
   }
 }
-
-export default Login;
