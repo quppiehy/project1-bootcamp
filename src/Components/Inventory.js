@@ -111,6 +111,36 @@ export default class Inventory extends React.Component {
         "60,000",
         "27,500",
       ],
+      botalabItemsList: [
+        "Deserticola Shampoo",
+        "Deserticola Water Treatment",
+        "Deserticola Black Shampoo",
+        "Deserticola Black Treatment",
+      ],
+      radiansomeItemsList: [
+        "Microfluidizer Essential Toner",
+        "Microfluidizer Ampoule",
+        "Micofluidizer Cream",
+      ],
+      botalabSrcUrl: [
+        "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686626670/Project1/botalab_5_fgfnuq.png",
+        "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686626670/Project1/botalab_4_kpin0t.png",
+        "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686626670/Project1/botalab_6_aedpav.png",
+        "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686626671/Project1/botalab_7_c2dcke.png",
+      ],
+      botalabPrices: ["36,000", "36,000", "38,500", "38,500"],
+      vitaminsItemsList: [
+        "Deep Talk Plus",
+        "Lifening Beauty Collagen Ampoule",
+        "Lifening Active Energy Shot",
+        "Lifening Reset Vitamin & Omega 3",
+      ],
+      vitaminsSrcUrl: [
+        "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686678368/Project1/vitamins_1_xy2cqr.png",
+        "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686678368/Project1/vitamins_2_ha9xj9.png",
+        "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686678368/Project1/vitamins_3_tuvqsa.png",
+      ],
+      vitaminsPrices: ["150,000", "99,000", "99,000", "88,000"],
     };
   }
 
