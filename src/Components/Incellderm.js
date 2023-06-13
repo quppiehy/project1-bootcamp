@@ -23,7 +23,7 @@ export default class Incellderm extends React.Component {
   render() {
     const { username } = this.props;
     const { currentPage } = this.state;
-
+    console.log(currentPage);
     return (
       <Container fluid className="gradient">
         <Row className="top_row">

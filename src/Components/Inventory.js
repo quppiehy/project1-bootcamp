@@ -123,15 +123,14 @@ export default class Inventory extends React.Component {
   };
 
   componentDidMount() {
-    const { username, currentPage } = this.props;
+    const { username, brand } = this.props;
     const myUsername = JSON.parse(localStorage.getItem(username));
     console.log("I am running in Inventory");
-    console.log(username, currentPage);
+    console.log(username, brand);
     if (username !== "") {
       this.setState({
         username: username,
         userInfo: myUsername,
-        currentPage: currentPage,
       });
       const inventory = this.createUserInventory();
 
@@ -179,7 +178,7 @@ export default class Inventory extends React.Component {
   // initializes stock to 0 if it's user's first time, else get value from local storage
   // returns Obj after getting values
   createUserInventory = () => {
-    const { username } = this.props;
+    const { username, brand } = this.props;
     const { incelldermItemsList, incelldermSrcURL, incelldermPrices } =
       this.state;
     const getStorageData = JSON.parse(
