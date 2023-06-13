@@ -12,62 +12,14 @@ export default class Dashboard extends React.Component {
     super(props);
     this.state = {
       currentPage: "dashboard",
-      username: this.props.username,
       isLoggedIn: true,
     };
   }
 
-  // handleLogin = (user) => {
-  //   this.setState({
-  //     isLoggedIn: true,
-  //     username: user,
-  //   });
-  // };
-
-  //to set correct page
-  handlePageChange = (page) => {
-    this.setState(
-      {
-        currentPage: page,
-      },
-      () => {
-        console.log(`In handlePageChange in Dashboard, page=${page}`);
-      }
-    );
-  };
-
   render() {
-    // const { isLoggedIn, username, currentPage } = this.state;
-    // console.log(isLoggedIn, username, currentPage);
-    // let pageComponent;
+    const { username } = this.props;
+    // const { isLoggedIn, currentPage } = this.state;
 
-    // if (currentPage === "incellderm") {
-    //   pageComponent = (
-    //     <Incellderm
-    //       handleLogin={this.handleLogin}
-    //       page={this.handlePageChange}
-    //     />
-    //   );
-    // } else if (currentPage === "radiansome") {
-    //   pageComponent = (
-    //     <Radiansome
-    //       handleLogin={this.handleLogin}
-    //       page={this.handlePageChange}
-    //     />
-    //   );
-    // } else if (currentPage === "botalab") {
-    //   pageComponent = (
-    //     <Botalab handleLogin={this.handleLogin} page={this.handlePageChange} />
-    //   );
-    // } else if (currentPage === "vitamins") {
-    //   pageComponent = (
-    //     <Vitamins handleLogin={this.handleLogin} page={this.handlePageChange} />
-    //   );
-    // } else if (isLoggedIn === false) {
-    //   pageComponent = (
-    //     <Logout page={this.handlePageChange} username={username} />
-    //   );
-    // }
     return (
       <Container fluid className="gradient">
         <Row>
@@ -78,7 +30,7 @@ export default class Dashboard extends React.Component {
         <Row className="justify-items-center">
           <Col xs lg xl xxl="12">
             <div className="page_title">
-              Welcome to your dashboard {this.state.username}!<br />
+              Welcome to your dashboard {username}!<br />
               <h4>Please click on any of the brands to check the inventory.</h4>
             </div>
           </Col>
@@ -86,12 +38,21 @@ export default class Dashboard extends React.Component {
         <Row>
           <br />
         </Row>
-        <Row className="justify-items-center">
-          <Col xs s md="0" lg xl="1" xxl="2">
-            <br />
-          </Col>
-          <Col xs s="12" md="6" lg xl="2.5" xxl="2">
-            <div className="dashboard_background dashboard_color1">
+        <Row>
+          <Col xs="1" s="1" md="1" lg="1" xl="1" xxl="1"></Col>
+          <Col
+            xs="11"
+            s="11"
+            md="5"
+            lg="2"
+            xl="2"
+            xxl="2"
+            className="mx-auto col-6"
+          >
+            <div
+              className="dashboard_background dashboard_color1"
+              onClick={() => this.props.page("incellderm")}
+            >
               <div className="dashboard_panel1">
                 <img
                   src={require("../images/logo1.png")}
@@ -104,13 +65,24 @@ export default class Dashboard extends React.Component {
               </div>
             </div>
           </Col>
-          <Col xs s="12" md="6" lg xl="2.5" xxl="2">
-            <div className="dashboard_background dashboard_color2">
+          <Col
+            xs="11"
+            s="11"
+            md="5"
+            lg="2"
+            xl="2"
+            xxl="2"
+            className="mx-auto padding"
+          >
+            <div
+              className="dashboard_background dashboard_color2 "
+              onClick={() => this.props.page("radiansome")}
+            >
               <div className="dashboard_panel2">
                 <img
                   src={require("../images/logo2.png")}
                   alt="radiansome"
-                  className="dashboard_img"
+                  className="dashboard_img mx-auto"
                 />
               </div>
               <div className="brand_names">
@@ -118,8 +90,11 @@ export default class Dashboard extends React.Component {
               </div>
             </div>
           </Col>
-          <Col xs s="12" md="6" lg xl="2.5" xxl="2">
-            <div className="dashboard_background dashboard_color3">
+          <Col xs="12" s="12" md="3" lg="2" xl="2" xxl="2" className="mx-auto">
+            <div
+              className="dashboard_background dashboard_color3"
+              onClick={() => this.props.page("botalab")}
+            >
               <div className="dashboard_panel3n4">
                 <img
                   src={require("../images/logo3.png")}
@@ -132,8 +107,11 @@ export default class Dashboard extends React.Component {
               </div>
             </div>
           </Col>
-          <Col xs s="12" md="6" lg xl="2.5" xxl="2">
-            <div className="dashboard_background dashboard_color4">
+          <Col xs="12" s="12" md="6" lg="2" xl="2" xxl="2" className="mx-auto">
+            <div
+              className="dashboard_background dashboard_color4"
+              onClick={() => this.props.page("vitamins")}
+            >
               <div className=" dashboard_panel3n4">
                 <img
                   src={require("../images/logo4.png")}
@@ -145,9 +123,6 @@ export default class Dashboard extends React.Component {
                 <h4>Vitamins</h4>
               </div>
             </div>
-          </Col>
-          <Col xs s md="0" lg xl="1" xxl="2">
-            <br />
           </Col>
         </Row>
       </Container>

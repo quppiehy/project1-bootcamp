@@ -11,6 +11,10 @@ import Signup from "./Signup";
 import ForgetPassword from "./ForgetPassword";
 import Newpassword from "./Newpassword";
 import Dashboard from "./Dashboard";
+import Incellderm from "../Components/Incellderm";
+import Radiansome from "../Components/Radiansome";
+import Botalab from "../Components/Botalab";
+import Vitamins from "../Components/Vitamins";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -34,6 +38,7 @@ export default class Home extends React.Component {
     );
   };
 
+  // to set state of username in parent Home.js to username from Login.js
   handleLogin = (user) => {
     this.setState({
       isLoggedIn: true,
@@ -45,7 +50,7 @@ export default class Home extends React.Component {
     const { isLoggedIn, username, currentPage } = this.state;
     console.log(isLoggedIn, username, currentPage);
     let pageComponent;
-
+    // to display correct page after user clicks
     if (currentPage === "home") {
       pageComponent = (
         <Login handleLogin={this.handleLogin} page={this.handlePageChange} />
@@ -56,9 +61,35 @@ export default class Home extends React.Component {
       pageComponent = <ForgetPassword page={this.handlePageChange} />;
     } else if (currentPage === "newpassword") {
       pageComponent = <Newpassword page={this.handlePageChange} />;
+    } else if (isLoggedIn === true && currentPage === "dashboard") {
+      pageComponent = (
+        <Dashboard
+          page={this.handlePageChange}
+          username={this.state.username}
+        />
+      );
+    } else if (isLoggedIn === true && currentPage === "incellderm") {
+      pageComponent = (
+        <Incellderm
+          page={this.handlePageChange}
+          username={this.state.username}
+          handleLogin={this.handleLogin}
+        />
+      );
+    } else if (isLoggedIn === true && currentPage === "radiansome") {
+      pageComponent = (
+        <Radiansome
+          page={this.handlePageChange}
+          username={this.state.username}
+        />
+      );
+    } else if (isLoggedIn === true && currentPage === "botalab") {
+      pageComponent = (
+        <Botalab page={this.handlePageChange} username={this.state.username} />
+      );
     } else if (isLoggedIn === true) {
       pageComponent = (
-        <Dashboard page={this.handlePageChange} username={username} />
+        <Vitamins page={this.handlePageChange} username={this.state.username} />
       );
     }
 
@@ -75,10 +106,18 @@ export default class Home extends React.Component {
               <img className="logo_padding logo_size" src={logo} alt="Logo" />
             </Col>
           </Row>
-          <Row className="justify-items-center">
-            <Col xs s="0" md="0.8" lg xl="1" xxl="3"></Col>
-            <Col xs s="12" md="6.2" lg xl="5" xxl="4" className="logo_padding">
-              <div className="logo_padding site_title">
+          <Row className="justify-content-center align-self-center">
+            {/* <Col xs="0" s="0" md="1" lg="1" xl="2" xxl="2"></Col> */}
+            <Col
+              xs="12"
+              s="12"
+              md="10"
+              lg="5"
+              xl="4"
+              xxl="4"
+              className="logo_padding "
+            >
+              <div className="site_title">
                 The
                 <br />
                 StockTaker
@@ -98,17 +137,30 @@ export default class Home extends React.Component {
               </div>
               <br />
             </Col>
-            <Col xs s="12" md="4" lg xl="3" xxl="2">
+            <Col
+              xs="12"
+              s="12"
+              md="10"
+              lg="5"
+              xl="5"
+              xxl="5"
+              className="align-self-center"
+            >
               {pageComponent}
             </Col>
-            <Col xs s md="0" lg xl="1" xxl="3"></Col>
+
+            {/* <Col xs="0" s="0" md="2" lg="1" xl="1" xxl="1"></Col> */}
           </Row>
         </Container>
       );
-    } else if (currentPage === "dashboard") {
+    } else if (
+      currentPage === "dashboard" ||
+      currentPage === "incellderm" ||
+      currentPage === "radiansome" ||
+      currentPage === "botalab" ||
+      currentPage === "vitamins"
+    ) {
       return <div>{pageComponent}</div>;
-    } else if (currentPage === "inventory") {
-      return <div>This is inventory</div>;
     }
   }
 }

@@ -15,13 +15,25 @@
   min-width: 100vh;
 }
 
+.no_padding {
+  padding-top: 0px !important;
+}
+
+.top_row {
+  background: #06647f;
+  margin-bottom: 0px !important;
+  padding-bottom: 0px !important;
+  padding-left: 20px !important;
+  padding-right: 10px !important;
+}
+
 /* header */
 .logo_padding {
   padding: 20px;
 }
 
 .logo_size {
-  height: 120px;
+  max-height: 120px;
 }
 
 /* maintext align left */
@@ -47,8 +59,8 @@
   box-shadow: 0px 4px 4px rgba(198, 198, 198, 0.25);
   border-radius: 20px;
   stroke: none;
-  width: 164px;
-  height: 48px;
+  min-width: 164px;
+  min-height: 48px;
   border-width: 0px !important;
   margin-left: 0px;
 }
@@ -70,13 +82,14 @@
 
 /* words style */
 .site_title {
-  margin-left: 200px;
+  margin-left: 70px;
+  margin-right: 20px;
   justify-self: center;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  font-size: 85px;
-  line-height: 90px;
+  font-size: clamp(3rem, 2.2rem + 5vw, 6rem);
+  line-height: clamp(3rem, 1rem + 7vw, 7rem);
   letter-spacing: 0.02em;
   text-align: left;
   color: #ffffff;
@@ -86,7 +99,7 @@
   font-family: "Bungee";
   font-style: normal;
   font-weight: 400;
-  font-size: 25px;
+  font-size: clamp(1.8rem, 1.5rem + 3vw, 2.3rem);
   line-height: 30px;
 }
 
@@ -94,15 +107,15 @@
   font-family: "Bungee";
   font-style: normal;
   font-weight: 400;
-  font-size: 40px;
-  line-height: 77px;
+  font-size: clamp(1rem, 1rem + 5vw, 2rem);
+  line-height: clamp(1rem, 1rem + 6vw, 3rem);
   color: #ffffff;
   text-align: center;
 }
 
 .site_text {
-  margin-left: 220px;
-  margin-top: -30px;
+  margin-left: 70px;
+  margin-top: 0px;
   color: #ffffff;
 }
 
@@ -118,17 +131,19 @@
 
 /* white box for login/signup/password */
 .login_rectangle_login {
-  width: 350px;
-  height: 350px;
+  width: clamp(280px, 60vw, 350px);
+  height: 100%;
+  max-width: 350px;
   background: rgba(255, 255, 255, 0.67);
   border-radius: 50px;
   padding-top: 50px;
   text-align: center;
+  margin-left: 60px !important;
 }
 
 .login_rectangle_signup {
-  width: 350px;
-  height: 380px;
+  width: clamp(280px, 60vw, 350px);
+  height: 100%;
   background: rgba(255, 255, 255, 0.67);
   border-radius: 50px;
   padding-top: 50px;
@@ -167,8 +182,8 @@
 .dashboard_background {
   border: 1px solid #ffffff;
   border-radius: 0px 50px;
-  width: 224px !important;
-  height: 288px;
+  width: clamp(180px, 25vw, 224px) !important;
+  min-height: 288px;
   cursor: pointer;
 }
 
@@ -177,21 +192,24 @@
 }
 
 .dashboard_panel1 {
-  padding-left: 45px;
-  padding-top: 30px;
+  padding-top: 8%;
+  text-align: center;
   justify-content: center;
 }
 
 .dashboard_panel2 {
-  padding-left: 60px;
-  padding-top: 30px;
+  padding-top: 8%;
   justify-content: center;
+  text-align: center;
 }
 
 .dashboard_panel3n4 {
-  padding-left: 40px;
-  padding-top: 30px;
-  justify-content: center;
+  text-align: center;
+  padding-top: 8%;
+}
+
+.block_display {
+  display: block;
 }
 
 /* dashboard text */
@@ -264,7 +282,141 @@
   padding-top: 20px !important;
 }
 
-@media screen and (min-width: 20em) and (max-width: 30.99em) {
+/* incellderm page */
+.text-left {
+  display: flex;
+  justify-content: left;
+}
+
+.text-center {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-top: 20px !important;
+}
+
+.topnav-right {
+  float: right;
+  text-align: center;
+  align-items: baseline;
+  /* margin-top: 40px !important; */
+  padding-right: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.nav-text {
+  display: flex;
+  justify-self: center;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700 !important;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: #000000;
+  margin-top: 60px;
+  min-height: 30px;
+}
+
+/* tabs on Incellderm, Radiansome, BotaLab, Vitamins page */
+.tab_background {
+  background: #00c4cc;
+  box-shadow: 0px 4px 4px rgba(198, 198, 198, 0.25);
+  border-radius: 20px 20px 0px 0px;
+  cursor: pointer;
+  max-height: 40px;
+  justify-items: right !important;
+  margin-top: 80px;
+}
+
+.tab_background:hover {
+  background: #c6fdff;
+}
+
+.tab_background:active {
+  background: #c6fdff;
+}
+
+.first_tab {
+  width: 120px;
+  padding: 6px;
+}
+
+.second_tab {
+  width: 130px;
+  padding: 6px;
+}
+
+.third_tab {
+  width: 110px;
+  padding: 6px;
+}
+
+.fourth_tab {
+  width: 130px;
+  padding: 6px;
+}
+
+/*inventory page*/
+.inventory_rectangle {
+  min-width: 100vh;
+  min-width: 50rem;
+  height: 100%;
+  min-height: 70vh;
+  background: #ffffff;
+  border-radius: 30px 30px;
+  padding: 5px 16px;
+  opacity: 0.8;
+}
+
+.table_row_header {
+  font-weight: bold !important;
+}
+
+.img_zoom:hover {
+  transition: transform 0.3s; /*Animation*/
+  height: auto;
+  width: auto;
+}
+
+.plus_button {
+  margin: 2px !important;
+  padding: 0px 5px !important;
+  background-color: #0b88aa !important;
+  color: white !important;
+}
+
+.plus_button:hover {
+  background-color: #9ad4e4 !important;
+  color: white !important;
+}
+
+.text_rights {
+  padding: 5px;
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+/*brand_name*/
+.inventory_brand_name {
+  color: #000000;
+  font-family: "Bungee";
+  font-style: normal;
+  /* font-weight: 200px; */
+  font-size: clamp(1rem, 1rem + 5vw, 3rem);
+  line-height: 60px;
+  text-align: left;
+  padding: 5px;
+}
+
+.hover:hover {
+  background-color: #44d7ff !important;
+  color: #000000 !important;
+}
+
+/* @media screen and (min-width: 20em) and (max-width: 30.99em) {
   .site_title {
     margin-left: 15px;
     margin-top: 10px;
@@ -383,8 +535,8 @@
     margin-left: 60px;
   }
 }
-
-@media screen and (min-width: 62.01em) {
+*/
+/* @media screen and (min-width: 62.01em) {
   .site_title {
     margin-left: 45px;
     margin-top: 10px;
@@ -422,6 +574,6 @@
     height: 300px;
     margin-left: 60px;
   }
-}
+} */
 
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");

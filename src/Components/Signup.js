@@ -75,7 +75,8 @@ class Signup extends React.Component {
       });
     } else {
       //both are empty, so can store details to local storage
-      const myObject = { username, email, password };
+      const timesVisited = 0;
+      const myObject = { username, email, password, timesVisited };
       localStorage.setItem(username, JSON.stringify(myObject));
       localStorage.setItem(email, JSON.stringify(myObject));
 

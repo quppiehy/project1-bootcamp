@@ -18,6 +18,7 @@ class Login extends React.Component {
       email: "",
       login: false,
       user: "",
+      timesVisited: 0,
     };
   }
 
@@ -43,12 +44,18 @@ class Login extends React.Component {
     const myUsername = JSON.parse(localStorage.getItem(username));
     console.log(myUsername);
     console.log(username, password);
-
-    console.log(myUsername.password);
     if (myUsername === null) {
       Swal.fire({
-        title: "error",
+        title: "Error",
         text: `Sorry! We do not have a user registered under ${this.state.username}. Please try again or Sign Up for an account.`,
+        icon: "error",
+        timer: 5000,
+        confirmButtonText: "OK",
+      });
+    } else if (password !== myUsername.password) {
+      Swal.fire({
+        title: "Error",
+        text: `Sorry! The details of ${this.state.username} does not match our records. Please try again or Sign Up for an account.`,
         icon: "error",
         timer: 5000,
         confirmButtonText: "OK",
@@ -56,6 +63,11 @@ class Login extends React.Component {
     } else if (password === myUsername.password) {
       console.log("running");
       //store the reference to this
+      const email = myUsername.email;
+      const timesVisited = myUsername.timesVisited + 1;
+      const myObject = { username, email, password, timesVisited };
+      localStorage.setItem(username, JSON.stringify(myObject));
+      localStorage.setItem(email, JSON.stringify(myObject));
       const self = this;
       this.setState(
         {
@@ -64,6 +76,7 @@ class Login extends React.Component {
           username: this.state.username,
           password: "",
           currentPage: "dashboard",
+          timesVisited: timesVisited,
         },
         () => {
           Swal.fire({

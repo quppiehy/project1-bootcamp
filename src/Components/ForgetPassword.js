@@ -106,11 +106,12 @@ class ForgetPassword extends React.Component {
             <div className="loginbox_title">Reset Password</div>
           </Col>
         </Row>
-        <Form onSubmit={this.handlePasswordReset}>
-          {currentPage === "newpassword" ? (
-            <div>{pageComponent}</div>
-          ) : (
-            <div>
+
+        {currentPage === "newpassword" ? (
+          <div>{pageComponent}</div>
+        ) : (
+          <div>
+            <Form onSubmit={this.handlePasswordReset}>
               <Row className="login_box_row">
                 <Col>
                   <Form.Group>
@@ -171,9 +172,9 @@ class ForgetPassword extends React.Component {
                   </button>
                 </Col>
               </Row>
-            </div>
-          )}
-        </Form>
+            </Form>
+          </div>
+        )}
       </div>
     );
   }

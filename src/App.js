@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import { NextUIProvider } from "@nextui-org/react";
 
 import Home from "./Components/Home";
 
@@ -8,6 +9,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentPage: "home",
+      username: "",
     };
   }
 
@@ -21,7 +23,11 @@ class App extends React.Component {
 
     pageComponent = <Home page={this.handlePageChange} p />;
 
-    return <div>{pageComponent}</div>;
+    return (
+      <div>
+        <NextUIProvider>{pageComponent}</NextUIProvider>
+      </div>
+    );
   }
 }
 
