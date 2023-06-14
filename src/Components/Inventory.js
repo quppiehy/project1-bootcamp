@@ -13,7 +13,7 @@ import { Button } from "react-bootstrap";
 import TableRow from "@mui/material/TableRow";
 import pluscircle from "../images/pluscircle.svg";
 import minuscircle from "../images/minuscircle.svg";
-import Form from "react-bootstrap/Form";
+import TextField from '@mui/material/TextField';
 import Swal from "sweetalert2";
 
 export default class Inventory extends React.Component {
@@ -25,49 +25,10 @@ export default class Inventory extends React.Component {
       isLoggedIn: true,
       username: "",
       firstTime: true,
-      userInventory: {
-        incellderm: [
-          {
-            name: "",
-            imgURL: "",
-            storageQty: 0,
-            reservedQty: 0,
-            productPrice: "",
-            salePrice: "",
-          },
-        ],
-        radiansome: [
-          {
-            name: "",
-            imgURL: "",
-            storageQty: 0,
-            reservedQty: 0,
-            productPrice: "",
-            salePrice: "",
-          },
-        ],
-        botalab: [
-          {
-            name: "",
-            imgURL: "",
-            storageQty: 0,
-            reservedQty: 0,
-            productPrice: "",
-            salePrice: "",
-          },
-        ],
-        vitamins: [
-          {
-            name: "",
-            imgURL: "",
-            storageQty: 0,
-            reservedQty: 0,
-            productPrice: "",
-            salePrice: "",
-          },
-        ],
-      },
+      brand: this.props,
+      userInventory: {},
       tableRows: [],
+      currItemsList: [],
       rowHeader: [
         "Product Image",
         "Product Name",
@@ -160,15 +121,33 @@ export default class Inventory extends React.Component {
     });
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { username, brand } = this.props;
-    const myUsername = JSON.parse(localStorage.getItem(`${username}${brand}`));
     console.log("I am running in Inventory");
     console.log(username, brand);
     //set brand based on page passed in as props
+    const itemsList = this.checkItem(brand);
+    const inventory = this.createUserInventory();
+    console.log(inventory, itemsList);
+
+    this.setState(
+      {
+        username: username,
+        userInventory: inventory,
+      },
+      () => {
+        this.createTableRow(brand, inventory);
+        console.log(this.state.userInventory);
+      }
+    );
+  };
+
+  checkItem = (brand) => {
     let itemsList = [];
+    console.log(brand);
     if (brand === "incellderm") {
       itemsList = this.state.incelldermItemsList;
+      console.log(this.state.incelldermItemsList);
     } else if (brand === "radiansome") {
       itemsList = this.state.radiansomeItemsList;
     } else if (brand === "botalab") {
@@ -176,68 +155,101 @@ export default class Inventory extends React.Component {
     } else if (brand === "vitamins") {
       itemsList = this.state.vitaminsItemsList;
     }
+    this.setState(
+      {
+        currItemsList: itemsList,
+      },
+      () => {
+        console.log(this.state.currItemsList);
+      }
+    );
+    console.log(itemsList);
+    return itemsList;
+  };
 
-    const inventory = this.createUserInventory();
-    const self = this;
-    //ensure username was passed in
-    if (username !== null) {
-      this.setState({
-        username: username,
-      });
-      const rows = [];
-      let currentRow = {};
+  handleClick = (col, itemName, action) => {
+    const { username, brand } = this.props;
+    const { userInventory } = this.state;
+    console.log(col, itemName);
+    console.log(this.state.userInventory);
+    console.log(userInventory);
 
-      for (let i = 0; i < itemsList.length; i++) {
-        currentRow = inventory[brand][i];
-        rows.push(
-          this.createData(
-            currentRow.imgURL,
-            currentRow.name,
-            currentRow.storageQty,
-            currentRow.reservedQty,
-            currentRow.productPrice,
-            currentRow.salePrice
-          )
+    let index = -1;
+    for (let i = 0; i < userInventory[brand].length; i++) {
+      if (userInventory[brand][i].name === itemName) {
+        console.log("if is running");
+        index = i;
+        console.log(userInventory[brand][index][col]);
+        if (action === "plus") {
+          userInventory[brand][index][col] += 1;
+          console.log(`New ${col} is ${userInventory[brand][index][col]}`);
+        } else if (action === "minus" && userInventory[brand][index][col] > 0) {
+          userInventory[brand][index][col] -= 1;
+          console.log(`New ${col} is ${userInventory[brand][index][col]}`);
+          break;
+        } else if (
+          action === "minus" &&
+          userInventory[brand][index][col] === 0
+        ) {
+          Swal.fire({
+            title: "Error",
+            text: `Sorry! You have 0 stock in inventory.`,
+            icon: "error",
+            timer: 5000,
+            confirmButtonText: "OK",
+          }).then(function () {
+            return;
+          });
+        }
+      }
+    }
+    localStorage.setItem(`${username}${brand}`, JSON.stringify(userInventory));
+    console.log(JSON.parse(localStorage.getItem(`${username}${brand}`)));
+    this.createTableRow(brand, userInventory);
+    this.setState(
+      {
+        userInventory: userInventory,
+      },
+      () => {
+        console.log(
+          `New user inventory for ${col} is ${userInventory[brand][index][col]}`
         );
       }
-      this.setState(
-        {
-          tableRows: rows,
-          userInventory: inventory,
-        },
-        () => {
-          console.log(this.state.tableRows);
-          // console.log(this.userInventory["incellderm"][1].name);
-        }
+    );
+  };
+
+  createTableRow = (brand) => {
+    const rows = [];
+    let currentRow = {};
+    const { currItemsList, userInventory } = this.state;
+    console.log(this.state.currItemsList);
+    const length = currItemsList.length;
+    for (let i = 0; i < length; i++) {
+      currentRow = userInventory[brand][i];
+      rows.push(
+        this.createData(
+          currentRow.imgURL,
+          currentRow.name,
+          currentRow.storageQty,
+          currentRow.reservedQty,
+          currentRow.productPrice,
+          currentRow.salePrice
+        )
       );
-    } else if (username === null) {
-      Swal.fire({
-        title: "Error",
-        text: "You have not logged in! Please login before you access your inventory.",
-        icon: "error",
-        timer: 5000,
-        confirmButtonText: "OK",
-      }).then(function () {
-        // Redirect the user
-        console.log("User not logged in");
-        self.props.handleLogin(self.state.username);
-        self.props.page("home");
-      });
     }
-  }
-
-  // handleClick = (col,item) => {
-
-  //   this.setState({
-  //      userInventory: myUsername,
-
-  //   }, ()=>{console.log(`In HandleClick: ${this.userInventory["Incellderm"][1].url}`)});
-
-  // };
+    this.setState(
+      {
+        tableRows: rows,
+      },
+      () => {
+        console.log(this.state.tableRows);
+        console.log(this.state.userInventory);
+      }
+    );
+  };
 
   // initializes stock to 0 if it's user's first time, else get value from local storage
   // returns Obj after getting values
-
   createUserInventory = () => {
     const { username, brand } = this.props;
     let itemsList = [];
@@ -270,7 +282,6 @@ export default class Inventory extends React.Component {
     console.log(getStorageData);
     const userInventory = {};
     userInventory[brand] = [];
-    console.log(userInventory);
     if (getStorageData === null) {
       for (let i = 0; i < itemsList.length; i++) {
         userInventory[`${brand}`].push({
@@ -282,12 +293,12 @@ export default class Inventory extends React.Component {
           salePrice: prices[i],
         });
       }
-
+      console.log(userInventory);
       const userInventoryString = JSON.stringify(userInventory);
       localStorage.setItem(`${username}${brand}`, userInventoryString);
       this.setState(
         {
-          userInventory: userInventory[brand],
+          userInventory: userInventory,
         },
         () => {
           console.log(this.state.userInventory);
@@ -295,7 +306,16 @@ export default class Inventory extends React.Component {
       );
       return userInventory;
     } else {
-      console.log(getStorageData[brand]);
+      this.setState(
+        {
+          userInventory: getStorageData,
+        },
+        () => {
+          console.log(getStorageData);
+          console.log(this.state.userInventory);
+        }
+      );
+      console.log(getStorageData);
       return getStorageData;
     }
   };
@@ -325,106 +345,119 @@ export default class Inventory extends React.Component {
     const { tableRows, rowHeader } = this.state;
     return (
       <NextUIProvider>
-        <Form>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell align="right">
-                    <Button
-                      type="submit"
-                      value="submit"
-                      variant="info"
-                      size="sm"
-                    >
-                      Save
-                    </Button>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell className="table_row_header">
+                  {rowHeader[0]}
+                </TableCell>
+                <TableCell className="table_row_header">
+                  {rowHeader[1]}
+                </TableCell>
+                <TableCell className="table_row_header">
+                  {rowHeader[2]}
+                </TableCell>
+                <TableCell className="table_row_header">
+                  {rowHeader[3]}
+                </TableCell>
+                <TableCell className="table_row_header">
+                  {rowHeader[4]}
+                </TableCell>
+                <TableCell className="table_row_header">
+                  {rowHeader[5]}
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {tableRows.map((tableRows) => (
+                <TableRow
+                  key={tableRows.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  hover={true}
+                >
+                  <TableCell component="th" scope="row">
+                    <Avatar
+                      alt={tableRows.name}
+                      src={tableRows.imgURL}
+                      squared
+                      size="md"
+                      bordered
+                      color="success"
+                      className="img_zoom"
+                    />
                   </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="table_row_header">
-                    {rowHeader[0]}
-                  </TableCell>
-                  <TableCell className="table_row_header">
-                    {rowHeader[1]}
-                  </TableCell>
-                  <TableCell className="table_row_header">
-                    {rowHeader[2]}
-                  </TableCell>
-                  <TableCell className="table_row_header">
-                    {rowHeader[3]}
-                  </TableCell>
-                  <TableCell className="table_row_header">
-                    {rowHeader[4]}
-                  </TableCell>
-                  <TableCell className="table_row_header">
-                    {rowHeader[5]}
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {tableRows.map((tableRows) => (
-                  <TableRow
-                    key={tableRows.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    hover={true}
-                  >
-                    <TableCell component="th" scope="row">
-                      <Avatar
-                        alt={tableRows.name}
-                        src={tableRows.imgURL}
-                        squared
-                        size="md"
-                        bordered
-                        color="success"
-                        className="img_zoom"
-                      />
-                    </TableCell>
-                    <TableCell align="left">{tableRows.name}</TableCell>
-                    <TableCell align="center">
-                      <div>{tableRows.storageQty}</div>
-                      <div>
+                  <TableCell align="left">{tableRows.name}</TableCell>
+                  <TableCell>
+                    <div className="flex-container">
+                      <div className="flex-child"><{tableRows.storageQty}</div>
+                      <div className="flex-child">
                         <Button
-                          bsSize="xsmall"
                           className="plus_button"
                           onClick={() =>
-                            this.handleClick(`storageQty`, `${tableRows.name}`)
+                            this.handleClick(
+                              `storageQty`,
+                              `${tableRows.name}`,
+                              "minus"
+                            )
                           }
                         >
                           <img src={minuscircle} alt="minus" height="18px" />
                         </Button>
-                        <Button bsSize="xsmall" className="plus_button">
+                        <Button
+                          className="plus_button"
+                          onClick={() =>
+                            this.handleClick(
+                              `storageQty`,
+                              `${tableRows.name}`,
+                              "plus"
+                            )
+                          }
+                        >
                           <img src={pluscircle} alt="+" height="18px" />
                         </Button>
                       </div>
-                    </TableCell>
-                    <TableCell align="center">
-                      <div>{tableRows.reservedQty}</div>
-                      <div>
-                        <Button bsSize="xsmall" className="plus_button">
+                    </div>
+                  </TableCell>
+                  <TableCell align="center">
+                    <div className="flex-container">
+                      <div className="flex-child">{tableRows.reservedQty}</div>
+                      <div className="flex-child">
+                        <Button
+                          className="plus_button"
+                          onClick={() =>
+                            this.handleClick(
+                              `reservedQty`,
+                              `${tableRows.name}`,
+                              "minus"
+                            )
+                          }
+                        >
                           <img src={minuscircle} alt="minus" height="18px" />
                         </Button>
-                      </div>
-                      <div>
-                        <Button bsSize="xsmall" className="plus_button">
+                        <Button
+                          className="plus_button"
+                          onClick={() =>
+                            this.handleClick(
+                              `reservedQty`,
+                              `${tableRows.name}`,
+                              "plus"
+                            )
+                          }
+                        >
                           <img src={pluscircle} alt="+" height="18px" />
                         </Button>
                       </div>
-                    </TableCell>
+                    </div>
+                  </TableCell>
 
-                    <TableCell align="left">{tableRows.productPrice}</TableCell>
-                    <TableCell align="left">{tableRows.salePrice}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Form>
+                  <TableCell align="left">{tableRows.productPrice}</TableCell>
+                  <TableCell align="left">{tableRows.salePrice}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </NextUIProvider>
     );
   }

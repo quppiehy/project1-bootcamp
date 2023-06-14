@@ -86,18 +86,23 @@ export default class Radiansome extends React.Component {
           {/* <Col xs s md="0.5" lg xl xxl="1"></Col> */}
         </Row>
         <Row>
-          <Col md="0.5"></Col>
-          <Col md="11">
+          <Col xs s md="0.5" lg xl xxl="1"></Col>
+          <Col xs s md="11" lg xl xxl="10">
             <Row>
               <h2 className="inventory_brand_name">{username}'s Radiansome</h2>
             </Row>
             <Row>
               <div class="inventory_rectangle">
-                <Inventory username={username} brand={currentPage} />
+                <br />
+                <Inventory
+                  username={username}
+                  brand={currentPage}
+                  page={this.props.handlePageChange}
+                />
               </div>
             </Row>
           </Col>
-          <Col md="0.5"></Col>
+          <Col xs s md="0.5" lg xl xxl="1"></Col>
         </Row>
       </Container>
     );

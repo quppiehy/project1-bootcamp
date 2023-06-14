@@ -73,7 +73,6 @@ export default class Home extends React.Component {
         <Incellderm
           page={this.handlePageChange}
           username={this.state.username}
-          handleLogin={this.handleLogin}
         />
       );
     } else if (isLoggedIn === true && currentPage === "radiansome") {

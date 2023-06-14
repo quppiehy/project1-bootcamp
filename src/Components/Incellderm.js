@@ -96,7 +96,11 @@ export default class Incellderm extends React.Component {
             <Row>
               <div class="inventory_rectangle">
                 <br />
-                <Inventory username={username} brand={currentPage} />
+                <Inventory
+                  username={username}
+                  brand={currentPage}
+                  page={this.props.handlePageChange}
+                />
               </div>
             </Row>
           </Col>

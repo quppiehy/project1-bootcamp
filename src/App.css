@@ -392,11 +392,17 @@
   color: white !important;
 }
 
-.text_rights {
-  padding: 5px;
-  background: none !important;
-  border: none !important;
-  cursor: pointer !important;
+.flex-container {
+  display: flex !important;
+}
+
+.flex-child {
+  flex: 1 !important;
+  align-self: center !important;
+}
+
+.flex-child:first-child {
+  margin-left: -10px !important;
 }
 
 /*brand_name*/
@@ -410,170 +416,5 @@
   text-align: left;
   padding: 5px;
 }
-
-.hover:hover {
-  background-color: #44d7ff !important;
-  color: #000000 !important;
-}
-
-/* @media screen and (min-width: 20em) and (max-width: 30.99em) {
-  .site_title {
-    margin-left: 15px;
-    margin-top: 10px;
-    font-weight: 400;
-    font-size: 54px;
-    line-height: 65px;
-    letter-spacing: 0.02em;
-    text-align: left;
-  }
-
-  .site_text {
-    margin-left: 38px;
-    margin-top: -30px;
-    color: #ffffff;
-  }
-
-  .main_button {
-    width: 120px;
-    height: 32px;
-    border-width: 0px !important;
-    margin-left: 50px;
-    margin-top: -40px;
-  }
-
-  .signup_button {
-    width: 120px;
-    height: 32px;
-    border-width: 0px !important;
-    margin-left: 20px;
-    margin-top: -40px;
-  }
-
-  .login_rectangle {
-    width: 280px;
-    height: 300px;
-    margin-left: 18px;
-  }
-}
-
-@media screen and (min-width: 31em) and (max-width: 48.99em) {
-  .site_title {
-    margin-left: 20px;
-    margin-top: 10px;
-    font-weight: 400;
-    font-size: 70px;
-    line-height: 65px;
-    letter-spacing: 0.02em;
-    text-align: left;
-  }
-
-  .site_text {
-    margin-left: 45px;
-    margin-top: -30px;
-    color: #ffffff;
-  }
-
-  .main_button {
-    width: 120px;
-    height: 32px;
-    border-width: 0px !important;
-    margin-left: 70px;
-    margin-top: -40px;
-  }
-
-  .signup_button {
-    width: 120px;
-    height: 32px;
-    border-width: 0px !important;
-    margin-left: 20px;
-    margin-top: -20px;
-  }
-
-  .login_rectangle {
-    width: 350px;
-    height: 300px;
-    margin-left: 30px;
-  }
-}
-
-@media screen and (min-width: 49em) and (max-width: 62em) {
-  .site_title {
-    margin-left: 45px;
-    margin-top: 10px;
-    font-weight: 400;
-    font-size: 75px;
-    line-height: 65px;
-    letter-spacing: 0.02em;
-    text-align: left;
-  }
-
-  .site_text {
-    margin-left: 70px;
-    margin-top: -30px;
-    color: #ffffff;
-  }
-
-  .main_button {
-    width: 120px;
-    height: 32px;
-    border-width: 0px !important;
-    margin-left: 70px;
-    margin-top: -40px;
-  }
-
-  .signup_button {
-    width: 120px;
-    height: 32px;
-    border-width: 0px !important;
-    margin-left: 20px;
-    margin-top: -20px;
-  }
-
-  .login_rectangle {
-    width: 350px;
-    height: 300px;
-    margin-left: 60px;
-  }
-}
-*/
-/* @media screen and (min-width: 62.01em) {
-  .site_title {
-    margin-left: 45px;
-    margin-top: 10px;
-    font-weight: 400;
-    font-size: 84px;
-    line-height: 65px;
-    letter-spacing: 0.02em;
-    text-align: left;
-  }
-
-  .site_text {
-    margin-left: 70px;
-    margin-top: -30px;
-    color: #ffffff;
-  }
-
-  .main_button {
-    width: 120px;
-    height: 32px;
-    border-width: 0px !important;
-    margin-left: 70px;
-    margin-top: -40px;
-  }
-
-  .signup_button {
-    width: 120px;
-    height: 32px;
-    border-width: 0px !important;
-    margin-left: 20px;
-    margin-top: -20px;
-  }
-
-  .login_rectangle {
-    width: 350px;
-    height: 300px;
-    margin-left: 60px;
-  }
-} */
 
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
