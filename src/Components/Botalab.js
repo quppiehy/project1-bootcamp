@@ -7,8 +7,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Nav, Navbar, NavLink } from "react-bootstrap";
 
 import logo from "../images/Logo.png";
+import Inventory from "./Inventory";
 
-export default class Dashboard extends React.Component {
+export default class Botalab extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,6 +21,7 @@ export default class Dashboard extends React.Component {
 
   render() {
     const { username } = this.props;
+    const { currentPage } = this.state;
     return (
       <Container fluid className="gradient">
         <Row className="top_row">
@@ -92,8 +94,7 @@ export default class Dashboard extends React.Component {
             </Row>
             <Row>
               <div class="inventory_rectangle">
-                <br />
-                testing
+                <Inventory username={username} brand={currentPage} />
               </div>
             </Row>
           </Col>

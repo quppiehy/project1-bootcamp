@@ -14,6 +14,7 @@ import TableRow from "@mui/material/TableRow";
 import pluscircle from "../images/pluscircle.svg";
 import minuscircle from "../images/minuscircle.svg";
 import Form from "react-bootstrap/Form";
+import Swal from "sweetalert2";
 
 export default class Inventory extends React.Component {
   constructor(props) {
@@ -122,6 +123,12 @@ export default class Inventory extends React.Component {
         "Microfluidizer Ampoule",
         "Micofluidizer Cream",
       ],
+      radiansomeSrcUrl: [
+        "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686626652/Project1/radiansome_2_bkgy0p.png",
+        "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686626652/Project1/radiansome_3_qj18w2.png",
+        "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686626652/Project1/radiansome_1_cqum06.png",
+      ],
+      radiansomePrices: ["77,000", "121,000", "99,000"],
       botalabSrcUrl: [
         "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686626670/Project1/botalab_5_fgfnuq.png",
         "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686626670/Project1/botalab_4_kpin0t.png",
@@ -138,7 +145,8 @@ export default class Inventory extends React.Component {
       vitaminsSrcUrl: [
         "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686678368/Project1/vitamins_1_xy2cqr.png",
         "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686678368/Project1/vitamins_2_ha9xj9.png",
-        "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686678368/Project1/vitamins_3_tuvqsa.png",
+        "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686680487/Project1/vitamins_3_lagmys.png",
+        "https://res.cloudinary.com/dh0bqrpee/image/upload/v1686680487/Project1/vitamins_4_xxhana.png",
       ],
       vitaminsPrices: ["150,000", "99,000", "99,000", "88,000"],
     };
@@ -154,24 +162,33 @@ export default class Inventory extends React.Component {
 
   componentDidMount() {
     const { username, brand } = this.props;
-    const myUsername = JSON.parse(localStorage.getItem(username));
+    const myUsername = JSON.parse(localStorage.getItem(`${username}${brand}`));
     console.log("I am running in Inventory");
     console.log(username, brand);
-    if (username !== "") {
+    //set brand based on page passed in as props
+    let itemsList = [];
+    if (brand === "incellderm") {
+      itemsList = this.state.incelldermItemsList;
+    } else if (brand === "radiansome") {
+      itemsList = this.state.radiansomeItemsList;
+    } else if (brand === "botalab") {
+      itemsList = this.state.botalabItemsList;
+    } else if (brand === "vitamins") {
+      itemsList = this.state.vitaminsItemsList;
+    }
+
+    const inventory = this.createUserInventory();
+    const self = this;
+    //ensure username was passed in
+    if (username !== null) {
       this.setState({
         username: username,
-        userInfo: myUsername,
       });
-      const inventory = this.createUserInventory();
-
-      const { incelldermItemsList } = this.state;
-      console.log(incelldermItemsList);
       const rows = [];
       let currentRow = {};
 
-      for (let i = 0; i < incelldermItemsList.length; i++) {
-        currentRow = inventory["incellderm"][i];
-        console.log(`CurrentRow is ${currentRow.imgURL}`);
+      for (let i = 0; i < itemsList.length; i++) {
+        currentRow = inventory[brand][i];
         rows.push(
           this.createData(
             currentRow.imgURL,
@@ -193,6 +210,19 @@ export default class Inventory extends React.Component {
           // console.log(this.userInventory["incellderm"][1].name);
         }
       );
+    } else if (username === null) {
+      Swal.fire({
+        title: "Error",
+        text: "You have not logged in! Please login before you access your inventory.",
+        icon: "error",
+        timer: 5000,
+        confirmButtonText: "OK",
+      }).then(function () {
+        // Redirect the user
+        console.log("User not logged in");
+        self.props.handleLogin(self.state.username);
+        self.props.page("home");
+      });
     }
   }
 
@@ -207,31 +237,57 @@ export default class Inventory extends React.Component {
 
   // initializes stock to 0 if it's user's first time, else get value from local storage
   // returns Obj after getting values
+
   createUserInventory = () => {
     const { username, brand } = this.props;
-    const { incelldermItemsList, incelldermSrcURL, incelldermPrices } =
-      this.state;
+    let itemsList = [];
+    let srcURL = [];
+    let prices = [];
+    if (brand === "incellderm") {
+      itemsList = this.state.incelldermItemsList;
+      srcURL = this.state.incelldermSrcURL;
+      prices = this.state.incelldermPrices;
+    } else if (brand === "radiansome") {
+      itemsList = this.state.radiansomeItemsList;
+      srcURL = this.state.radiansomeSrcUrl;
+      prices = this.state.radiansomePrices;
+    } else if (brand === "botalab") {
+      itemsList = this.state.botalabItemsList;
+      srcURL = this.state.botalabSrcUrl;
+      prices = this.state.botalabPrices;
+    } else if (brand === "vitamins") {
+      itemsList = this.state.vitaminsItemsList;
+      srcURL = this.state.vitaminsSrcUrl;
+      prices = this.state.vitaminsPrices;
+    }
+
+    console.log(`Items list in create User Inventory ${itemsList}`);
+    console.log(srcURL);
+    console.log(prices);
     const getStorageData = JSON.parse(
-      localStorage.getItem(`${username}incellderm`)
+      localStorage.getItem(`${username}${brand}`)
     );
-    const userInventory = { incellderm: [] };
+    console.log(getStorageData);
+    const userInventory = {};
+    userInventory[brand] = [];
+    console.log(userInventory);
     if (getStorageData === null) {
-      for (let i = 0; i < incelldermItemsList.length; i++) {
-        userInventory["incellderm"].push({
-          imgURL: incelldermSrcURL[i],
-          name: incelldermItemsList[i],
+      for (let i = 0; i < itemsList.length; i++) {
+        userInventory[`${brand}`].push({
+          imgURL: srcURL[i],
+          name: itemsList[i],
           storageQty: 0,
           reservedQty: 0,
-          productPrice: incelldermPrices[i],
-          salePrice: incelldermPrices[i],
+          productPrice: prices[i],
+          salePrice: prices[i],
         });
       }
 
       const userInventoryString = JSON.stringify(userInventory);
-      localStorage.setItem(`${username}incellderm`, userInventoryString);
+      localStorage.setItem(`${username}${brand}`, userInventoryString);
       this.setState(
         {
-          userInventory: userInventory["incellderm"],
+          userInventory: userInventory[brand],
         },
         () => {
           console.log(this.state.userInventory);
@@ -239,7 +295,7 @@ export default class Inventory extends React.Component {
       );
       return userInventory;
     } else {
-      console.log(getStorageData["incellderm"]);
+      console.log(getStorageData[brand]);
       return getStorageData;
     }
   };

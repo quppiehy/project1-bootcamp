@@ -21,6 +21,7 @@ export default class Vitamins extends React.Component {
 
   render() {
     const { username } = this.props;
+    const { currentPage } = this.state;
     return (
       <Container fluid className="gradient">
         <Row className="top_row">
@@ -95,7 +96,11 @@ export default class Vitamins extends React.Component {
             <Row>
               <div class="inventory_rectangle">
                 <br />
-                <Inventory username={this.state.username} />
+                <Inventory
+                  username={username}
+                  brand={currentPage}
+                  page={this.props.handlePageChange}
+                />
               </div>
             </Row>
           </Col>

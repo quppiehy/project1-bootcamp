@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Nav, Navbar, NavLink } from "react-bootstrap";
 
+import Inventory from "./Inventory";
 import logo from "../images/Logo.png";
 
 export default class Radiansome extends React.Component {
@@ -20,6 +21,7 @@ export default class Radiansome extends React.Component {
 
   render() {
     const { username } = this.props;
+    const { currentPage } = this.state;
     return (
       <Container fluid className="gradient">
         <Row className="top_row">
@@ -91,8 +93,7 @@ export default class Radiansome extends React.Component {
             </Row>
             <Row>
               <div class="inventory_rectangle">
-                <br />
-                testing
+                <Inventory username={username} brand={currentPage} />
               </div>
             </Row>
           </Col>
