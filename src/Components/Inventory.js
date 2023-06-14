@@ -13,7 +13,7 @@ import { Button } from "react-bootstrap";
 import TableRow from "@mui/material/TableRow";
 import pluscircle from "../images/pluscircle.svg";
 import minuscircle from "../images/minuscircle.svg";
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 import Swal from "sweetalert2";
 
 export default class Inventory extends React.Component {
@@ -113,14 +113,6 @@ export default class Inventory extends React.Component {
     };
   }
 
-  handleChange = (events) => {
-    let { name, value } = events.target;
-
-    this.setState({
-      [name]: value,
-    });
-  };
-
   componentDidMount = () => {
     const { username, brand } = this.props;
     console.log("I am running in Inventory");
@@ -167,6 +159,36 @@ export default class Inventory extends React.Component {
     return itemsList;
   };
 
+  //handle direct input in text field
+  handleChange = (events, col, itemName) => {
+    events.preventDefault();
+    const { username, brand } = this.props;
+    const { userInventory } = this.state;
+    let { value } = events.target;
+    let index = -1;
+    for (let i = 0; i < userInventory[brand].length; i++) {
+      if (userInventory[brand][i].name === itemName) {
+        console.log("handleChange is running");
+        index = i;
+        userInventory[brand][index][col] = value;
+      }
+    }
+    localStorage.setItem(`${username}${brand}`, JSON.stringify(userInventory));
+    console.log(JSON.parse(localStorage.getItem(`${username}${brand}`)));
+    this.createTableRow(brand, userInventory);
+    this.setState(
+      {
+        userInventory: userInventory,
+      },
+      () => {
+        console.log(
+          `New user inventory for ${col} is ${userInventory[brand][index][col]}`
+        );
+      }
+    );
+  };
+
+  //handle click + or - button
   handleClick = (col, itemName, action) => {
     const { username, brand } = this.props;
     const { userInventory } = this.state;
@@ -388,9 +410,31 @@ export default class Inventory extends React.Component {
                     />
                   </TableCell>
                   <TableCell align="left">{tableRows.name}</TableCell>
-                  <TableCell>
+                  <TableCell align="center">
                     <div className="flex-container">
-                      <div className="flex-child"><{tableRows.storageQty}</div>
+                      <div className="flex-child">
+                        <TextField
+                          id="standard-basic"
+                          variant="standard"
+                          size="small"
+                          value={tableRows.storageQty}
+                          sx={{
+                            width: { sm: 30, md: 30 },
+                            "& .MuiInputBase-root": {
+                              height: 20,
+                              "& input": { textAlign: "center" },
+                            },
+                          }}
+                          onChange={(event) =>
+                            this.handleChange(
+                              event,
+                              `storageQty`,
+                              `${tableRows.name}`
+                            )
+                          }
+                          required
+                        />
+                      </div>
                       <div className="flex-child">
                         <Button
                           className="plus_button"
@@ -421,7 +465,29 @@ export default class Inventory extends React.Component {
                   </TableCell>
                   <TableCell align="center">
                     <div className="flex-container">
-                      <div className="flex-child">{tableRows.reservedQty}</div>
+                      <div className="flex-child">
+                        <TextField
+                          id="standard-basic"
+                          variant="standard"
+                          size="small"
+                          value={tableRows.reservedQty}
+                          sx={{
+                            width: { sm: 30, md: 30 },
+                            "& .MuiInputBase-root": {
+                              height: 20,
+                              "& input": { textAlign: "center" },
+                            },
+                          }}
+                          onChange={(event) =>
+                            this.handleChange(
+                              event,
+                              `reservedQty`,
+                              `${tableRows.name}`
+                            )
+                          }
+                          required
+                        />
+                      </div>
                       <div className="flex-child">
                         <Button
                           className="plus_button"
