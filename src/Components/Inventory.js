@@ -15,6 +15,7 @@ import pluscircle from "../images/pluscircle.svg";
 import minuscircle from "../images/minuscircle.svg";
 import TextField from "@mui/material/TextField";
 import Swal from "sweetalert2";
+import TablePagination from "@mui/material/TablePagination";
 
 export default class Inventory extends React.Component {
   constructor(props) {
@@ -29,6 +30,8 @@ export default class Inventory extends React.Component {
       userInventory: {},
       tableRows: [],
       currItemsList: [],
+      pg: 0,
+      rpg: 5,
       rowHeader: [
         "Product Image",
         "Product Name",
@@ -162,52 +165,53 @@ export default class Inventory extends React.Component {
   //handle direct input in text field
   handleChange = (events, col, itemName) => {
     events.preventDefault();
-    const { username, brand } = this.props;
-    const { userInventory } = this.state;
     let { value } = events.target;
-    let index = -1;
-    for (let i = 0; i < userInventory[brand].length; i++) {
-      if (userInventory[brand][i].name === itemName) {
-        console.log("handleChange is running");
-        index = i;
-        userInventory[brand][index][col] = value;
+
+    let numbers = /^[0-9]+$/;
+    if (value.match(numbers) === null) {
+      Swal.fire({
+        title: "Error",
+        text: `Sorry! Please only enter numbers.`,
+        icon: "error",
+        timer: 5000,
+        confirmButtonText: "OK",
+      });
+      return;
+    } else {
+      const { username, brand } = this.props;
+      const { userInventory } = this.state;
+
+      let index = -1;
+      for (let i = 0; i < userInventory[brand].length; i++) {
+        if (userInventory[brand][i].name === itemName) {
+          index = i;
+          userInventory[brand][index][col] = value;
+        }
       }
+      localStorage.setItem(
+        `${username}${brand}`,
+        JSON.stringify(userInventory)
+      );
+      this.createTableRow(brand, userInventory);
+      this.setState({ userInventory: userInventory });
     }
-    localStorage.setItem(`${username}${brand}`, JSON.stringify(userInventory));
-    console.log(JSON.parse(localStorage.getItem(`${username}${brand}`)));
-    this.createTableRow(brand, userInventory);
-    this.setState(
-      {
-        userInventory: userInventory,
-      },
-      () => {
-        console.log(
-          `New user inventory for ${col} is ${userInventory[brand][index][col]}`
-        );
-      }
-    );
   };
 
   //handle click + or - button
   handleClick = (col, itemName, action) => {
     const { username, brand } = this.props;
     const { userInventory } = this.state;
-    console.log(col, itemName);
-    console.log(this.state.userInventory);
-    console.log(userInventory);
 
     let index = -1;
     for (let i = 0; i < userInventory[brand].length; i++) {
       if (userInventory[brand][i].name === itemName) {
-        console.log("if is running");
         index = i;
-        console.log(userInventory[brand][index][col]);
         if (action === "plus") {
+          userInventory[brand][index][col] *= 1;
           userInventory[brand][index][col] += 1;
-          console.log(`New ${col} is ${userInventory[brand][index][col]}`);
         } else if (action === "minus" && userInventory[brand][index][col] > 0) {
+          userInventory[brand][index][col] *= 1;
           userInventory[brand][index][col] -= 1;
-          console.log(`New ${col} is ${userInventory[brand][index][col]}`);
           break;
         } else if (
           action === "minus" &&
@@ -226,25 +230,16 @@ export default class Inventory extends React.Component {
       }
     }
     localStorage.setItem(`${username}${brand}`, JSON.stringify(userInventory));
-    console.log(JSON.parse(localStorage.getItem(`${username}${brand}`)));
     this.createTableRow(brand, userInventory);
-    this.setState(
-      {
-        userInventory: userInventory,
-      },
-      () => {
-        console.log(
-          `New user inventory for ${col} is ${userInventory[brand][index][col]}`
-        );
-      }
-    );
+    this.setState({
+      userInventory: userInventory,
+    });
   };
 
   createTableRow = (brand) => {
     const rows = [];
     let currentRow = {};
     const { currItemsList, userInventory } = this.state;
-    console.log(this.state.currItemsList);
     const length = currItemsList.length;
     for (let i = 0; i < length; i++) {
       currentRow = userInventory[brand][i];
@@ -259,15 +254,9 @@ export default class Inventory extends React.Component {
         )
       );
     }
-    this.setState(
-      {
-        tableRows: rows,
-      },
-      () => {
-        console.log(this.state.tableRows);
-        console.log(this.state.userInventory);
-      }
-    );
+    this.setState({
+      tableRows: rows,
+    });
   };
 
   // initializes stock to 0 if it's user's first time, else get value from local storage
@@ -294,14 +283,9 @@ export default class Inventory extends React.Component {
       srcURL = this.state.vitaminsSrcUrl;
       prices = this.state.vitaminsPrices;
     }
-
-    console.log(`Items list in create User Inventory ${itemsList}`);
-    console.log(srcURL);
-    console.log(prices);
     const getStorageData = JSON.parse(
       localStorage.getItem(`${username}${brand}`)
     );
-    console.log(getStorageData);
     const userInventory = {};
     userInventory[brand] = [];
     if (getStorageData === null) {
@@ -315,29 +299,16 @@ export default class Inventory extends React.Component {
           salePrice: prices[i],
         });
       }
-      console.log(userInventory);
       const userInventoryString = JSON.stringify(userInventory);
       localStorage.setItem(`${username}${brand}`, userInventoryString);
-      this.setState(
-        {
-          userInventory: userInventory,
-        },
-        () => {
-          console.log(this.state.userInventory);
-        }
-      );
+      this.setState({
+        userInventory: userInventory,
+      });
       return userInventory;
     } else {
-      this.setState(
-        {
-          userInventory: getStorageData,
-        },
-        () => {
-          console.log(getStorageData);
-          console.log(this.state.userInventory);
-        }
-      );
-      console.log(getStorageData);
+      this.setState({
+        userInventory: getStorageData,
+      });
       return getStorageData;
     }
   };
@@ -358,17 +329,45 @@ export default class Inventory extends React.Component {
       productPrice,
       salePrice,
     };
-    console.log("CreateData is running");
-    console.log(obj);
     return obj;
+  };
+
+  handleChangePage = (newpage, event) => {
+    const { tableRows, rpg, pg } = this.state;
+    const count = tableRows.length;
+    const totalPages = Math.ceil(count / rpg);
+    console.log(`This is total pages in HandlePgChange ${totalPages}`);
+    if (pg > 0 && newpage < totalPages) {
+      this.setState({ pg: this.pg + 1 });
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: `Sorry! There are no more pages left.`,
+        icon: "error",
+        timer: 5000,
+        confirmButtonText: "OK",
+      });
+    }
+  };
+
+  handleLogout = () => {
+    this.setState({
+      isLoggedIn: false,
+      username: "",
+    });
+  };
+
+  handleChangeRowsPerPage = (event) => {
+    this.setState({ rpg: parseInt(event.target.value, 10), setpg: 0 });
   };
 
   render() {
     const { tableRows, rowHeader } = this.state;
+    const { pg, rpg } = this.state;
     return (
       <NextUIProvider>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 300 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell className="table_row_header">
@@ -392,7 +391,8 @@ export default class Inventory extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {tableRows.map((tableRows) => (
+              {/* {tableRows.map((tableRows) => ( */}
+              {tableRows.slice(pg * rpg, pg * rpg + rpg).map((tableRows) => (
                 <TableRow
                   key={tableRows.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -524,6 +524,15 @@ export default class Inventory extends React.Component {
             </TableBody>
           </Table>
         </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10]}
+          component="div"
+          count={tableRows.length}
+          rowsPerPage={rpg}
+          page={pg}
+          onPageChange={(event) => this.handleChangePage(1, event)}
+          onRowsPerPageChange={(event) => this.handleChangeRowsPerPage(event)}
+        />
       </NextUIProvider>
     );
   }

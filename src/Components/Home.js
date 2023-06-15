@@ -15,6 +15,7 @@ import Incellderm from "../Components/Incellderm";
 import Radiansome from "../Components/Radiansome";
 import Botalab from "../Components/Botalab";
 import Vitamins from "../Components/Vitamins";
+import Swal from "sweetalert2";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -28,12 +29,13 @@ export default class Home extends React.Component {
 
   //to set correct page
   handlePageChange = (page) => {
+    console.log(`I am in PageChange`);
     this.setState(
       {
         currentPage: page,
       },
       () => {
-        console.log(`In handlePageChange in Home, page=${page}`);
+        console.log(page);
       }
     );
   };
@@ -46,9 +48,30 @@ export default class Home extends React.Component {
     });
   };
 
+  handleLogout = () => {
+    this.setState(
+      {
+        isLoggedIn: false,
+        username: "",
+      },
+      () => {
+        Swal.fire({
+          title: "Success!",
+          text: "You have successfully logged out. See you next time!",
+          icon: "success",
+          timer: 5000,
+          confirmButtonText: "OK",
+        }).then(function () {
+          const anchor = document.createElement("a");
+          anchor.href = "/";
+          anchor.click();
+        });
+      }
+    );
+  };
+
   render() {
     const { isLoggedIn, username, currentPage } = this.state;
-    console.log(isLoggedIn, username, currentPage);
     let pageComponent;
     // to display correct page after user clicks
     if (currentPage === "home") {
@@ -61,34 +84,41 @@ export default class Home extends React.Component {
       pageComponent = <ForgetPassword page={this.handlePageChange} />;
     } else if (currentPage === "newpassword") {
       pageComponent = <Newpassword page={this.handlePageChange} />;
-    } else if (isLoggedIn === true && currentPage === "dashboard") {
+    } else if (currentPage === "dashboard") {
       pageComponent = (
-        <Dashboard
-          page={this.handlePageChange}
-          username={this.state.username}
-        />
+        <Dashboard page={this.handlePageChange} username={username} />
       );
-    } else if (isLoggedIn === true && currentPage === "incellderm") {
+    } else if (currentPage === "incellderm") {
       pageComponent = (
         <Incellderm
           page={this.handlePageChange}
-          username={this.state.username}
+          username={username}
+          logout={this.handleLogout}
         />
       );
-    } else if (isLoggedIn === true && currentPage === "radiansome") {
+    } else if (currentPage === "radiansome") {
       pageComponent = (
         <Radiansome
           page={this.handlePageChange}
-          username={this.state.username}
+          username={username}
+          logout={this.handleLogout}
         />
       );
-    } else if (isLoggedIn === true && currentPage === "botalab") {
+    } else if (currentPage === "botalab") {
       pageComponent = (
-        <Botalab page={this.handlePageChange} username={this.state.username} />
+        <Botalab
+          page={this.handlePageChange}
+          username={username}
+          logout={this.handleLogout}
+        />
       );
-    } else if (isLoggedIn === true) {
+    } else if (currentPage === "vitamins") {
       pageComponent = (
-        <Vitamins page={this.handlePageChange} username={this.state.username} />
+        <Vitamins
+          page={this.handlePageChange}
+          username={username}
+          logout={this.handleLogout}
+        />
       );
     }
 
@@ -106,16 +136,7 @@ export default class Home extends React.Component {
             </Col>
           </Row>
           <Row className="justify-content-center align-self-center">
-            {/* <Col xs="0" s="0" md="1" lg="1" xl="2" xxl="2"></Col> */}
-            <Col
-              xs="12"
-              s="12"
-              md="10"
-              lg="5"
-              xl="4"
-              xxl="4"
-              className="logo_padding "
-            >
+            <Col s="12" md="10" lg="5" className="logo_padding ">
               <div className="site_title">
                 The
                 <br />
@@ -136,19 +157,9 @@ export default class Home extends React.Component {
               </div>
               <br />
             </Col>
-            <Col
-              xs="12"
-              s="12"
-              md="10"
-              lg="5"
-              xl="5"
-              xxl="5"
-              className="align-self-center"
-            >
+            <Col s="12" md="10" lg="5" className="align-self-center">
               {pageComponent}
             </Col>
-
-            {/* <Col xs="0" s="0" md="2" lg="1" xl="1" xxl="1"></Col> */}
           </Row>
         </Container>
       );

@@ -2,7 +2,20 @@
   justify-content: center;
 }
 
-/* background */
+/* background
+.fill {
+  min-height: 100% !important;
+} */
+
+html,
+body {
+  height: 100% !important;
+}
+
+.wrapper {
+  width: 80%;
+}
+
 .gradient {
   background-color: #004d78;
   background-image: linear-gradient(
@@ -106,7 +119,7 @@
 .page_title {
   font-family: "Bungee";
   font-style: normal;
-  font-weight: 400;
+  /* font-weight: 400; */
   font-size: clamp(1rem, 1rem + 5vw, 2rem);
   line-height: clamp(1rem, 1rem + 6vw, 3rem);
   color: #ffffff;
@@ -212,6 +225,11 @@
   display: block;
 }
 
+.panel_padding {
+  justify-content: center !important;
+  margin-left: 30px !important;
+}
+
 /* dashboard text */
 .brand_names {
   padding-top: 20px;
@@ -315,8 +333,12 @@
   letter-spacing: 0.04em;
   text-align: center;
   color: #000000;
-  margin-top: 60px;
+  margin-top: 0px;
   min-height: 30px;
+}
+
+.relative {
+  margin-top: 70px;
 }
 
 /* tabs on Incellderm, Radiansome, BotaLab, Vitamins page */
@@ -327,7 +349,7 @@
   cursor: pointer;
   max-height: 40px;
   justify-items: right !important;
-  margin-top: 80px;
+  margin-top: 0px;
 }
 
 .tab_background:hover {
@@ -355,6 +377,11 @@
 
 .fourth_tab {
   width: 130px;
+  padding: 6px;
+}
+
+.fifth_tab {
+  width: 120px;
   padding: 6px;
 }
 
@@ -415,6 +442,18 @@
   line-height: 60px;
   text-align: left;
   padding: 5px;
+}
+
+@media (max-width: 767px) {
+  .page_title {
+    text-align: left;
+    font-family: "Bungee";
+    font-style: normal;
+    /* font-weight: 400; */
+    font-size: clamp(0.8rem, 1rem + 3vw, 2rem);
+    line-height: clamp(1rem, 1rem + 4vw, 3rem);
+    color: #ffffff;
+  }
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");

@@ -34,7 +34,7 @@ export default class Radiansome extends React.Component {
               expand="lg"
               bg="none"
               variant="light"
-              className="float-end position-relative bottom-0 end-0"
+              className="float-end position-relative bottom-0 end-0 relative"
             >
               <Navbar.Toggle
                 aria-controls="navbarScroll"
@@ -75,15 +75,21 @@ export default class Radiansome extends React.Component {
                   >
                     <p className="fourth_tab">Vitamins</p>
                   </NavLink>
+                  <NavLink
+                    className="tab_background nav-text float-end position-relative bottom-0 end-0"
+                    onClick={() => {
+                      this.props.logout();
+                    }}
+                  >
+                    <p className="fifth_tab">Logout</p>
+                  </NavLink>
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
           </Col>
         </Row>
         <Row>
-          {/* <Col xs s md="0.5" lg xl xxl="1"></Col> */}
           <Col xs s md="11" lg xl xxl="10"></Col>
-          {/* <Col xs s md="0.5" lg xl xxl="1"></Col> */}
         </Row>
         <Row>
           <Col xs s md="0.5" lg xl xxl="1"></Col>
@@ -98,6 +104,7 @@ export default class Radiansome extends React.Component {
                   username={username}
                   brand={currentPage}
                   page={this.props.handlePageChange}
+                  logout={this.props.handleLogout}
                 />
               </div>
             </Row>
